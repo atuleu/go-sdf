@@ -2,10 +2,6 @@ package sdf
 
 import "encoding/xml"
 
-type Pose struct {
-	Frame string `xml:"frame,attr,omitempty"`
-}
-
 type ModelInclude struct {
 	XMLName xml.Name `xml:"include"`
 	URI     string   `xml:"uri"`
