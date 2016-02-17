@@ -7,17 +7,16 @@ import (
 )
 
 type World struct{}
-type Model struct{}
 type Actor struct{}
 type Light struct{}
 
 type Sdf struct {
 	XMLName xml.Name `xml:"sdf"`
 	Version string   `xml:"version,attr"`
-	World   *World   `xml:"world,omitempty"`
-	Model   *Model   `xml:"model,omitempty"`
-	Actor   *Actor   `xml:"actor,omitempty"`
-	Light   *Light   `xml:"light,omitempty"`
+	Worlds  []*World
+	Models  []*Model
+	Actors  []*Actor
+	Lights  []*Light
 }
 
 var versionRegexp = regexp.MustCompile(`1\.(4|5|6)`)
