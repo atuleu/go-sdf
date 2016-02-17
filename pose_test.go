@@ -53,5 +53,10 @@ func (s *PoseSuite) TestXmlOutput(c *C) {
 		c.Check(err, IsNil)
 		c.Check(string(d), Equals, xmlValue)
 
+		res := &Pose{}
+		err = xml.Unmarshal([]byte(xmlValue), res)
+		c.Check(err, IsNil)
+		c.Check(res, DeepEquals, p)
+
 	}
 }
