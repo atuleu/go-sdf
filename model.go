@@ -1,6 +1,9 @@
 package sdf
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"fmt"
+)
 
 type ModelInclude struct {
 	XMLName xml.Name `xml:"include"`
@@ -10,9 +13,23 @@ type ModelInclude struct {
 	Static  bool     `xml:"static,omitempty"`
 }
 
+func (inc *ModelInclude) Validate() error {
+	if len(inc.URI) == 0 {
+		return fmt.Errorf("Missing URI in sdf.ModelInclude")
+	}
+	return nil
+}
+
 type ModelFrame struct {
 	Name string `xml:"frame"`
 	Pose *Pose  `xml:"pose,omitempty"`
+}
+
+func (f *ModelFrame) Validate() error {
+	if len(f.Name) == 0 {
+		return fmt.Errorf("Missing name in sdf.ModelFrame")
+	}
+	return nil
 }
 
 type Link struct{}
