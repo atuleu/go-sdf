@@ -3,6 +3,7 @@ package sdf
 import (
 	"encoding/xml"
 	"fmt"
+	"strings"
 )
 
 type ModelInclude struct {
@@ -40,6 +41,20 @@ type ModelPlugin struct {
 	XMLName  xml.Name `xml:"plugin"`
 	Name     string   `xml:"name,attr"`
 	Filename string   `xml:"filename,attr`
+}
+
+func (p *ModelPlugin) Validate() error {
+	missing := make([]string, 0, 2)
+	if len(p.Name) == 0 {
+		missing = append(missing, "name")
+	}
+	if len(p.Filename) == 0 {
+		missing = append(missing, "filename")
+	}
+	if len(missing) == 0 {
+		return nil
+	}
+	return fmt.Errorf("Missing %s in sdf.ModelPlugin", strings.Join(missing, ","))
 }
 
 type ModelGripper struct {

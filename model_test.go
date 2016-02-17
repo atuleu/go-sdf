@@ -46,3 +46,24 @@ func (s *ModelSuite) TestFrameValidation(c *C) {
 		c.Check(inc.Validate(), IsNil)
 	}
 }
+
+func (s *ModelSuite) TestPluginValidation(c *C) {
+	invalidPlugins := map[string]*ModelPlugin{
+		"name,filename": &ModelPlugin{},
+		"filename":      &ModelPlugin{Name: "foo"},
+		"name":          &ModelPlugin{Filename: "libfoo.so"},
+	}
+
+	validPlugins := []*ModelPlugin{
+		&ModelPlugin{Name: "foo", Filename: "libfoo.so"},
+	}
+
+	for missing, inc := range invalidPlugins {
+		c.Check(inc.Validate(), ErrorMatches, "Missing "+missing+" in sdf.ModelPlugin")
+	}
+
+	for _, inc := range validPlugins {
+		c.Check(inc.Validate(), IsNil)
+	}
+
+}
