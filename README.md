@@ -1,3 +1,5 @@
 # go-sdf
 
-[SDF](sdformat.org/spec) format specifications
+[SDF](http://sdformat.org/spec) format specifications for golang.
+
+This package is in early development stages.
