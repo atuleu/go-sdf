@@ -21,20 +21,6 @@ func (inc *ModelInclude) Validate() error {
 	return nil
 }
 
-type ModelFrame struct {
-	Name string `xml:"frame"`
-	Pose *Pose  `xml:"pose,omitempty"`
-}
-
-func (f *ModelFrame) Validate() error {
-	if len(f.Name) == 0 {
-		return fmt.Errorf("Missing name in sdf.ModelFrame")
-	}
-	return nil
-}
-
-type Link struct{}
-
 type Joint struct{}
 
 type ModelPlugin struct {
@@ -70,9 +56,9 @@ type Model struct {
 	AllowAutoDisable bool     `xml:"allow_auto_disable,omitempty"`
 	Includes         []*ModelInclude
 	Models           []*Model
-	EnableWind       bool        `xml:"enable_wind,omitempty"`
-	Frame            *ModelFrame `xml:"frame,omitempty"`
-	Pose             *Pose       `xml:"pose,omitempty"`
+	EnableWind       bool `xml:"enable_wind,omitempty"`
+	Frames           *Frame
+	Poses            *Pose
 	Links            []*Link
 	Plugins          []*ModelPlugin
 	Grippers         []*ModelGripper

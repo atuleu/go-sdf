@@ -29,24 +29,6 @@ func (s *ModelSuite) TestIncludeValidation(c *C) {
 
 }
 
-func (s *ModelSuite) TestFrameValidation(c *C) {
-	invalidFrames := []*ModelFrame{
-		&ModelFrame{},
-		&ModelFrame{Pose: &Pose{Values: []float64{0, 0, 0, 0, 0, 0}}},
-	}
-	validFrames := []*ModelFrame{
-		&ModelFrame{Name: "foo"},
-		&ModelFrame{Name: "bar", Pose: &Pose{Values: []float64{0, 0, 0, 0, 0, 0}}},
-	}
-	for _, inc := range invalidFrames {
-		c.Check(inc.Validate(), ErrorMatches, "Missing name in sdf.ModelFrame")
-	}
-
-	for _, inc := range validFrames {
-		c.Check(inc.Validate(), IsNil)
-	}
-}
-
 func (s *ModelSuite) TestPluginValidation(c *C) {
 	invalidPlugins := map[string]*ModelPlugin{
 		"name,filename": &ModelPlugin{},
