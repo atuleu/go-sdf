@@ -6,10 +6,6 @@ type Material struct {
 	XMLName struct{} `xml:"material"`
 }
 
-type Geometry struct {
-	XMLName struct{} `xml:"geometry"`
-}
-
 type Visual struct {
 	XMLName      struct{} `xml:"visual"`
 	Name         string   `xml:"name"`
@@ -27,4 +23,8 @@ func (v *Visual) Validate() error {
 		return fmt.Errorf("Missing name in sdf.Visual")
 	}
 	return nil
+}
+
+func NewVisual(name string) *Visual {
+	return &Visual{Name: name}
 }

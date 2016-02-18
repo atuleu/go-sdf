@@ -13,7 +13,7 @@ func (s *ModelSuite) TestIncludeValidation(c *C) {
 		&ModelInclude{},
 		&ModelInclude{Static: true},
 		&ModelInclude{Name: "foo"},
-		&ModelInclude{Pose: &Pose{Values: []float64{0, 0, 0, 0, 0, 0}}},
+		&ModelInclude{Pose: NewZeroPose()},
 	}
 
 	validIncludes := []*ModelInclude{

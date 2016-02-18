@@ -11,11 +11,11 @@ var _ = Suite(&FrameSuite{})
 func (s *FrameSuite) TestFrameValidation(c *C) {
 	invalidFrames := []*Frame{
 		&Frame{},
-		&Frame{Pose: &Pose{Values: []float64{0, 0, 0, 0, 0, 0}}},
+		&Frame{Pose: NewZeroPose()},
 	}
 	validFrames := []*Frame{
 		&Frame{Name: "foo"},
-		&Frame{Name: "bar", Pose: &Pose{Values: []float64{0, 0, 0, 0, 0, 0}}},
+		&Frame{Name: "bar", Pose: NewZeroPose()},
 	}
 	for _, inc := range invalidFrames {
 		c.Check(inc.Validate(), ErrorMatches, "Missing name in sdf.ModelFrame")

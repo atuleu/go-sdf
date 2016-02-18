@@ -39,7 +39,16 @@ type Link struct {
 	MustBeBaseLink Bool           `xml:"must_be_base_link,omitempty"`
 	VelocityDecay  *VelocityDecay `xml:",omitempty"`
 	Frames         []*Frame
-	Visual         []*Visual
+	Visuals        []*Visual
+	Collisions     []*Collision
+}
+
+func NewLink(name string) *Link {
+	return &Link{
+		Name:           name,
+		NonSelfCollide: true,
+		NonKinematic:   true,
+	}
 }
 
 func (l *Link) Validate() error {

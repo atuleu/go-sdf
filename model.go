@@ -63,3 +63,7 @@ type Model struct {
 	Plugins          []*ModelPlugin
 	Grippers         []*ModelGripper
 }
+
+func NewModel(name string) *Model {
+	return &Model{Name: name}
+}

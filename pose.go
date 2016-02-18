@@ -1,60 +1,40 @@
 package sdf
 
-import (
-	"encoding/xml"
-	"fmt"
-)
+import "encoding/xml"
 
 type Pose struct {
-	Frame  string
-	Values []float64
+	XMLName struct{} `xml:"pose"`
+	Vec6
+	Frame string `xml:"frame,attr"`
 }
 
-type golangPose struct {
-	Frame  string `xml:"frame,attr,omitempty"`
-	Values string `xml:",chardata"`
+func NewZeroPose() *Pose {
+	return &Pose{
+		Vec6:  NewZeroVec6(),
+		Frame: "",
+	}
 }
 
 func (p *Pose) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if err := p.Validate(); err != nil {
-		return err
-	}
 	start.Name.Local = "pose"
-	pp := &golangPose{
-		Frame:  p.Frame,
-		Values: fmt.Sprintf("%f %f %f %f %f %f", p.Values[0], p.Values[1], p.Values[2], p.Values[3], p.Values[4], p.Values[5]),
+	if len(p.Frame) != 0 {
+		start.Attr = []xml.Attr{xml.Attr{Name: xml.Name{Local: "frame"}, Value: p.Frame}}
 	}
-
-	return e.EncodeElement(pp, start)
+	return e.EncodeElement(p.Vec6, start)
 }
 
 func (p *Pose) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	pp := &golangPose{}
-	if err := d.DecodeElement(pp, &start); err != nil {
+	var data Vec6
+	if err := d.DecodeElement(&data, &start); err != nil {
 		return err
 	}
-
-	p.Frame = pp.Frame
-	p.Values = make([]float64, 6)
-
-	var x, y, z, roll, pitch, yaw float64
-
-	_, err := fmt.Sscanf(pp.Values, "%f %f %f %f %f %f", &x, &y, &z, &roll, &pitch, &yaw)
-
-	p.Values[0] = x
-	p.Values[1] = y
-	p.Values[2] = z
-	p.Values[3] = roll
-	p.Values[4] = pitch
-	p.Values[5] = yaw
-
-	return err
-}
-
-func (p *Pose) Validate() error {
-	if len(p.Values) != 6 {
-		return fmt.Errorf("A sdf.Pose should have 6 values (Position(x,y,z), Rotation(roll,pitch,yaw)), got %d elements", len(p.Values))
+	(*p).Vec6 = data
+	p.Frame = ""
+	for _, a := range start.Attr {
+		if a.Name.Local != "frame" {
+			continue
+		}
+		p.Frame = a.Value
 	}
-
 	return nil
 }

@@ -35,10 +35,10 @@ func (s *LinkSuite) TestLinkXml(c *C) {
 		L   *Link
 	}{
 		{
-			Xml: `<link name="foo"><pose>0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</pose><inertial><inertia><ixx>1</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1</iyy><iyz>0</iyz><izz>1</izz></inertia><mass>1</mass></inertial><self_collide>0</self_collide><kinematic>0</kinematic><gravity>1</gravity></link>`,
+			Xml: `<link name="foo"><pose>0 0 0 0 0 0</pose><inertial><inertia><ixx>1</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1</iyy><iyz>0</iyz><izz>1</izz></inertia><mass>1</mass></inertial><self_collide>0</self_collide><kinematic>0</kinematic><gravity>1</gravity></link>`,
 			L: &Link{
 				Name: "foo",
-				Pose: &Pose{Values: []float64{0, 0, 0, 0, 0, 0}},
+				Pose: NewZeroPose(),
 				Inertial: &Inertial{
 					Inertia: &Inertia{Xx: 1, Yy: 1, Zz: 1},
 					Mass:    1,
