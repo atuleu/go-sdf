@@ -13,3 +13,7 @@ func (f *Frame) Validate() error {
 	}
 	return nil
 }
+
+func NewFrame(name string, p *Pose) *Frame {
+	return &Frame{Name: name, Pose: p}
+}

@@ -15,6 +15,13 @@ func NewZeroPose() *Pose {
 	}
 }
 
+func NewPose(x, y, z, roll, pitch, yaw float64) *Pose {
+	return &Pose{
+		Vec6:  Vec6{x, y, z, roll, pitch, yaw},
+		Frame: "",
+	}
+}
+
 func (p *Pose) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "pose"
 	if len(p.Frame) != 0 {
