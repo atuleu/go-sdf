@@ -74,3 +74,22 @@ func (g *Geometry) Validate() error {
 func NewBox(size Vec3) *Geometry {
 	return &Geometry{Box: &Box{Size: size}}
 }
+
+func NewCylinder(radius, length float64) *Geometry {
+	return &Geometry{Cylinder: &Cylinder{Radius: radius, Length: length}}
+}
+
+func (b *Box) Inertia(mass float64) *Inertia {
+	return &Inertia{
+		Xx: mass / 12.0 * (b.Size[1]*b.Size[1] + b.Size[2]*b.Size[2]),
+		Xy: 0,
+		Xz: 0,
+		Yy: mass / 12.0 * (b.Size[0]*b.Size[0] + b.Size[2]*b.Size[2]),
+		Yz: 0,
+		Zz: mass / 12.0 * (b.Size[0]*b.Size[0] + b.Size[1]*b.Size[1]),
+	}
+}
+
+func (b *Box) Mass(density float64) float64 {
+	return density * b.Size[0] * b.Size[1] * b.Size[2]
+}
