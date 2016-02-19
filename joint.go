@@ -114,68 +114,84 @@ func (j *Joint) Validate() error {
 	return nil
 }
 
-func NewRevoluteJoint(name string, axis Vec3) *Joint {
+func NewRevoluteJoint(name, parent, child string, axis Vec3) *Joint {
 	return &Joint{
-		Name: name,
-		Type: JOINT_REVOLUTE,
-		Axis: NewAxis(axis),
+		Name:   name,
+		Type:   JOINT_REVOLUTE,
+		Parent: parent,
+		Child:  child,
+		Axis:   NewAxis(axis),
 	}
 }
 
-func NewPrismaticJoint(name string, axis Vec3) *Joint {
+func NewPrismaticJoint(name, parent, child string, axis Vec3) *Joint {
 	return &Joint{
-		Name: name,
-		Type: JOINT_PRISMATIC,
-		Axis: NewAxis(axis),
+		Name:   name,
+		Type:   JOINT_PRISMATIC,
+		Parent: parent,
+		Child:  child,
+		Axis:   NewAxis(axis),
 	}
 }
 
-func NewGearboxJoint(name string, axis Vec3, ratio float64, ref string) *Joint {
+func NewUniversalJoint(name, parent, child string, axis Vec3) *Joint {
+	return &Joint{
+		Name:   name,
+		Type:   JOINT_UNIVERSAL,
+		Parent: parent,
+		Child:  child,
+		Axis:   NewAxis(axis),
+	}
+}
+
+func NewGearboxJoint(name, parent, child string, axis Vec3, ratio float64, ref string) *Joint {
 	return &Joint{
 		Name:                 name,
 		Type:                 JOINT_GEARBOX,
+		Parent:               parent,
+		Child:                child,
 		Axis:                 NewAxis(axis),
 		GearboxRatio:         ratio,
 		GearboxReferenceBody: ref,
 	}
 }
 
-func NewScrewJoint(name string, axis Vec3, threadPitch float64) *Joint {
+func NewScrewJoint(name, parent, child string, axis Vec3, threadPitch float64) *Joint {
 	return &Joint{
 		Name:        name,
 		Type:        JOINT_SCREW,
+		Parent:      parent,
+		Child:       child,
 		Axis:        NewAxis(axis),
 		ThreadPitch: threadPitch,
 	}
 }
 
-func NewRevolute2Joint(name string, axis, axis2 Vec3) *Joint {
+func NewRevolute2Joint(name, parent, child string, axis, axis2 Vec3) *Joint {
 	return &Joint{
-		Name:  name,
-		Type:  JOINT_REVOLUTE2,
-		Axis:  NewAxis(axis),
-		Axis2: NewAxis(axis2),
+		Name:   name,
+		Type:   JOINT_REVOLUTE2,
+		Parent: parent,
+		Child:  child,
+		Axis:   NewAxis(axis),
+		Axis2:  NewAxis(axis2),
 	}
 }
 
-func NewBallJoint(name string) *Joint {
+func NewBallJoint(name, parent, child string) *Joint {
 	return &Joint{
-		Name: name,
-		Type: JOINT_BALL,
+		Name:   name,
+		Type:   JOINT_BALL,
+		Parent: parent,
+		Child:  child,
 	}
 }
 
-func NewFixedJoint(name string) *Joint {
+func NewFixedJoint(name, parent, child string) *Joint {
 	return &Joint{
-		Name: name,
-		Type: JOINT_FIXED,
-	}
-}
-
-func NewUniversalJoint(name string, axis Vec3) *Joint {
-	return &Joint{
-		Name: name,
-		Type: JOINT_UNIVERSAL,
-		Axis: NewAxis(axis),
+		Name:   name,
+		Type:   JOINT_FIXED,
+		Parent: parent,
+		Child:  child,
 	}
 }
