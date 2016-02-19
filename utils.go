@@ -62,6 +62,10 @@ func NewZeroVec3() Vec3 {
 	return Vec3{0, 0, 0}
 }
 
+var UnitX = Vec3{1, 0, 0}
+var UnitY = Vec3{0, 1, 0}
+var UnitZ = Vec3{0, 0, 1}
+
 type Vec4 [4]float64
 
 func NewZeroVec4() Vec4 {
