@@ -2,10 +2,6 @@ package sdf
 
 import "fmt"
 
-type Material struct {
-	XMLName struct{} `xml:"material"`
-}
-
 type Visual struct {
 	XMLName      struct{} `xml:"visual"`
 	Name         string   `xml:"name,attr"`
