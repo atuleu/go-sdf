@@ -43,7 +43,6 @@ type AxisLimit struct {
 }
 
 type Axis struct {
-	XMLName        struct{}     `xml:"name"`
 	Xyz            Vec3         `xml:"xyz"`
 	UseParentFrame Bool         `xml:"use_parent_model_frame"`
 	Dynamics       *AxisDynamic `xml:"dynamics,omitempty"`
@@ -76,8 +75,8 @@ type JointPhysics struct {
 
 type Joint struct {
 	XMLName struct{} `xml:"joint"`
-	Name    string   `xml:"name"`
-	Type    string   `xml:"type"`
+	Name    string   `xml:"name,attr"`
+	Type    string   `xml:"type,attr"`
 	Parent  string   `xml:"parent"`
 	Child   string   `xml:"child"`
 

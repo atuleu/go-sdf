@@ -42,12 +42,12 @@ func (p *ModelPlugin) Validate() error {
 }
 
 type ModelGripper struct {
-	XMLName xml.Name `xml:"gripper"`
+	XMLName struct{} `xml:"gripper"`
 	Name    string   `xml:"name,attr"`
 }
 
 type Model struct {
-	XMLName          xml.Name `xml:"model"`
+	XMLName          struct{} `xml:"model"`
 	Name             string   `xml:"name,attr"`
 	Static           bool     `xml:"static,omitempty"`
 	SelfCollide      bool     `xml:"self_collide,omitempty"`
@@ -57,7 +57,8 @@ type Model struct {
 	EnableWind       bool     `xml:"enable_wind,omitempty"`
 	Frames           []*Frame `xml:"frame"`
 	Pose             *Pose    `xml:"pose"`
-	Links            []*Link
+	Links            []*Link  `xml:"link"`
+	Joints           []*Joint `xml:"joint"`
 	Plugins          []*ModelPlugin
 	Grippers         []*ModelGripper
 }

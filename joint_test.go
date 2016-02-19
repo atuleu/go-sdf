@@ -1,6 +1,10 @@
 package sdf
 
-import . "gopkg.in/check.v1"
+import (
+	"encoding/xml"
+
+	. "gopkg.in/check.v1"
+)
 
 type JointSuite struct{}
 
@@ -53,6 +57,41 @@ func (s *JointSuite) TestJointValidation(c *C) {
 
 	for _, d := range invalidJoint {
 		c.Check(d.Joint.Validate(), ErrorMatches, d.Err)
+	}
+
+}
+
+func (s *JointSuite) TestJoinXMLOutput(c *C) {
+	type TestData struct {
+		Xml   string
+		Joint *Joint
+	}
+
+	data := []TestData{
+		{
+			Xml: `<joint name="bar_12_joint" type="revolute"><parent>link_1</parent><child>link_2</child><pose>0 0.5 0 0 0 0</pose><axis><xyz>0 0 1</xyz></axis></joint>`,
+			Joint: &Joint{
+				Name:   "bar_12_joint",
+				Type:   JOINT_REVOLUTE,
+				Parent: "link_1",
+				Child:  "link_2",
+				Pose:   NewPose(0, 0.5, 0, 0, 0, 0),
+				Axis:   NewAxis(Vec3{0, 0, 1}),
+			},
+		},
+	}
+
+	for _, d := range data {
+		xmlRes, err := xml.Marshal(d.Joint)
+		c.Check(err, IsNil)
+		c.Check(string(xmlRes), Equals, d.Xml)
+
+		j := &Joint{}
+		err = xml.Unmarshal([]byte(d.Xml), j)
+		c.Check(err, IsNil)
+		c.Check(j.Validate(), IsNil)
+		c.Check(j, DeepEquals, d.Joint)
+
 	}
 
 }
