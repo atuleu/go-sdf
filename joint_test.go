@@ -14,15 +14,15 @@ func (s *JointSuite) TestJointValidation(c *C) {
 	invalidJoint := []InvalidData{
 		{
 			Err:   "Missing name in sdf.Joint",
-			Joint: &Joint{},
+			Joint: &Joint{Type: JOINT_BALL, Parent: "a", Child: "b"},
 		},
 		{
 			Err:   "Invalid sdf.Joint.Type ''",
-			Joint: &Joint{Name: "foo"},
+			Joint: &Joint{Name: "foo", Type: "", Parent: "a", Child: "b"},
 		},
 		{
 			Err:   "Invalid sdf.Joint.Type 'does_not_exist_as_a_type'",
-			Joint: &Joint{Name: "foo", Type: "does_not_exist_as_a_type"},
+			Joint: &Joint{Name: "foo", Type: "does_not_exist_as_a_type", Parent: "a", Child: "b"},
 		},
 	}
 
@@ -33,7 +33,18 @@ func (s *JointSuite) TestJointValidation(c *C) {
 				Err:   "Missing name in sdf.Joint",
 				Joint: &Joint{Name: "", Type: t},
 			})
-		validJoint = append(validJoint, &Joint{Name: "foo", Type: t})
+		invalidJoint = append(invalidJoint,
+			InvalidData{
+				Err:   "Missing parent in sdf.Joint",
+				Joint: &Joint{Name: "foo", Type: t},
+			})
+		invalidJoint = append(invalidJoint,
+			InvalidData{
+				Err:   "Missing child in sdf.Joint",
+				Joint: &Joint{Name: "foo", Type: t, Parent: "a"},
+			})
+
+		validJoint = append(validJoint, &Joint{Name: "foo", Type: t, Parent: "a", Child: "b"})
 	}
 
 	for _, j := range validJoint {
