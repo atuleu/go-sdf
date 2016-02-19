@@ -21,8 +21,6 @@ func (inc *ModelInclude) Validate() error {
 	return nil
 }
 
-type Joint struct{}
-
 type ModelPlugin struct {
 	XMLName  xml.Name `xml:"plugin"`
 	Name     string   `xml:"name,attr"`
@@ -56,9 +54,9 @@ type Model struct {
 	AllowAutoDisable bool     `xml:"allow_auto_disable,omitempty"`
 	Includes         []*ModelInclude
 	Models           []*Model
-	EnableWind       bool `xml:"enable_wind,omitempty"`
-	Frames           *Frame
-	Poses            *Pose
+	EnableWind       bool     `xml:"enable_wind,omitempty"`
+	Frames           []*Frame `xml:"frame"`
+	Pose             *Pose    `xml:"pose"`
 	Links            []*Link
 	Plugins          []*ModelPlugin
 	Grippers         []*ModelGripper
