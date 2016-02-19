@@ -48,6 +48,26 @@ func (s *LinkSuite) TestLinkXml(c *C) {
 				NonKinematic:   true,
 			},
 		},
+		{
+			Xml: `<link name="foo"><pose>0 0 0 0 0 0</pose><inertial><inertia><ixx>1</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1</iyy><iyz>0</iyz><izz>1</izz></inertia><mass>1</mass></inertial><self_collide>0</self_collide><kinematic>0</kinematic><gravity>1</gravity><frame name="foo"><pose>0 0 0 0 0 1</pose></frame></link>`,
+			L: &Link{
+				Name: "foo",
+				Pose: NewZeroPose(),
+				Inertial: &Inertial{
+					Inertia: &Inertia{Xx: 1, Yy: 1, Zz: 1},
+					Mass:    1,
+				},
+				Gravity:        true,
+				NonSelfCollide: true,
+				NonKinematic:   true,
+				Frames: []*Frame{
+					&Frame{
+						Name: "foo",
+						Pose: NewPose(0, 0, 0, 0, 0, 1),
+					},
+				},
+			},
+		},
 	}
 
 	for _, d := range data {

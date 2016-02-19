@@ -38,7 +38,7 @@ type Link struct {
 	Gravity        Bool           `xml:"gravity"`
 	MustBeBaseLink Bool           `xml:"must_be_base_link,omitempty"`
 	VelocityDecay  *VelocityDecay `xml:",omitempty"`
-	Frames         []*Frame
+	Frames         []*Frame       `xml:"frame"`
 	Visuals        []*Visual
 	Collisions     []*Collision
 }

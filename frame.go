@@ -3,8 +3,9 @@ package sdf
 import "fmt"
 
 type Frame struct {
-	Name string `xml:"frame"`
-	Pose *Pose  `xml:"pose,omitempty"`
+	XMLName struct{} `xml:"frame"`
+	Name    string   `xml:"name,attr"`
+	Pose    *Pose    `xml:"pose,omitempty"`
 }
 
 func (f *Frame) Validate() error {
