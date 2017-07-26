@@ -60,6 +60,8 @@ type JointPhysicsODE struct {
 	FudgeFactor         float64  `xml:"fudge_factor,omitempty"`
 	Cfm                 float64  `xml:"cfm,omitempty"`
 	Erp                 float64  `xml:"erp,omitempty"`
+	Bounce              float64  `xml:"bounce,omitempty"`
+	MaxForce            float64  `xml:"max_force"`
 }
 
 type JointPhysicsSimbody struct {
@@ -68,9 +70,10 @@ type JointPhysicsSimbody struct {
 }
 
 type JointPhysics struct {
-	XMLName struct{}             `xml:"physics"`
-	Simbody *JointPhysicsSimbody `xml:"simbody"`
-	ODE     *JointPhysicsODE     `xml:"ode"`
+	XMLName         struct{}             `xml:"physics"`
+	ProvideFeedback Bool                 `xml:"provide_feedback"`
+	Simbody         *JointPhysicsSimbody `xml:"simbody"`
+	ODE             *JointPhysicsODE     `xml:"ode"`
 }
 
 type Joint struct {
